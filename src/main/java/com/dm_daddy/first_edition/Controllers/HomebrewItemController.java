@@ -38,56 +38,51 @@ public class HomebrewItemController {
     //-----------------------------
     @GetMapping("/homebrewItems/all")
     public Page<HomebrewItems> getAllItems(@RequestParam int page, @RequestParam int size){
-        Page<HomebrewItems> homebrewItemsList = (Page<HomebrewItems>) repo.getAllHomebrewItems(PageRequest.of(page, size));
-        return homebrewItemsList;
+//        Page<HomebrewItems> homebrewItemsList = (Page<HomebrewItems>) repo.getAllHomebrewItems(PageRequest.of(page, size));
+//        return homebrewItemsList;
+        return repo.getAllHomebrewItems(PageRequest.of(page, size));
     }
 
     //---- Load Hb Item List ----
     //---------------------------
     @GetMapping("/homebrewItems/list")
     public List<HomebrewItems> getAllHbItems(){
-        List<HomebrewItems> homebrewItemsList = (List<HomebrewItems>) repo.findAll();
-        return homebrewItemsList;
+        return  (List<HomebrewItems>) repo.findAll();
     }
 
     //---- Load Item Type -------
     //---------------------------
     @GetMapping("/homebrewItems/type")
     public List<RefCode> getItemType(){
-        List<RefCode> itemTypes = (List<RefCode>) refRepo.findByParentId((long) 9);
-        return itemTypes;
+        return refRepo.findByParentId((long) 9);
     }
 
     //----- Load Rarity ---------
     //---------------------------
     @GetMapping("/homebrewItems/rarity")
     public List<RefCode> getRarity(){
-        List<RefCode> rarity = refRepo.findByParentId((long) 1);
-        return rarity;
+        return refRepo.findByParentId((long)1);
     }
 
     //---- Load Attunement -----
     //--------------------------
     @GetMapping("/homebrewItems/attunement")
     public List<RefCode> getAttunment(){
-        List<RefCode> attunement = refRepo.findByParentId((long) 91);
-        return attunement;
+        return refRepo.findByParentId((long) 91);
     }
 
     //---- Load Armor Type ------
     //---------------------------
     @GetMapping("/homebrewItems/armorType")
     public List<RefCode> getArmorType(){
-        List<RefCode> armorType = refRepo.findByParentId((long) 19);
-        return armorType;
+        return refRepo.findByParentId((long) 19);
     }
 
     //----- Load Weapon Type ---
     //--------------------------
     @GetMapping("/homebrewItems/weaponType")
     public List<RefCode> getWeaponType(){
-        List<RefCode> weaponType = refRepo.findByParentId((long) 34);
-        return weaponType;
+        return refRepo.findByParentId((long) 34);
     }
 
     //---- Create an Item -------
@@ -99,8 +94,7 @@ public class HomebrewItemController {
 //        String currentPrincipalName = authentication.getName();
 //        System.out.println(currentPrincipalName);
 //        homebrewItem.setCreator(currentPrincipalName);
-        HomebrewItems createdHomebrewItem = repo.save(homebrewItem);
-        return createdHomebrewItem;
+        return repo.save(homebrewItem);
 
     }
 
@@ -110,8 +104,7 @@ public class HomebrewItemController {
     @Transactional
     public List<HomebrewItems> deleteItem(@PathVariable Long id){
         repo.deleteById(id);
-        List<HomebrewItems> homebrewItemList = (List<HomebrewItems>) repo.findAll();
-        return homebrewItemList;
+        return (List<HomebrewItems>) repo.findAll();
     }
 
 }

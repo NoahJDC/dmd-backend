@@ -13,6 +13,10 @@ public interface ItemRepository extends CrudRepository<Items, Long> {
     @Query("Select i from Items i")
     public Page<Items> getAllItems(Pageable pageable);
 
+//    public Items getAllByName(String name);
+//
+//    public Items getAllByAttunmentId(Long id);
+
 
 
 

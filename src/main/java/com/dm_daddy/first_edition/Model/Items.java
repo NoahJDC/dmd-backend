@@ -44,5 +44,12 @@ public class Items {
     @JoinColumn(name = "weaponType", referencedColumnName = "ID")
     private RefCode weaponType;
 
+    public Items() {
 
+    }
+
+    public Items(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 }

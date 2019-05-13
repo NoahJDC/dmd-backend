@@ -30,16 +30,14 @@ public class PlayerCampaignController {
     //-------------------------------------
     @GetMapping("campaign/{player}/{dm}")
     public List<PlayerCampaigns> getCampaignByPlayer(@PathVariable String player, @PathVariable String dm){
-        List<PlayerCampaigns> campaignsList = repo.findPlayerCampaignsByPlayerCharacterCreatorIdUsernameOrCreatorIdUsername(player,dm);
-        return campaignsList;
+        return repo.findPlayerCampaignsByPlayerCharacterCreatorIdUsernameOrCreatorIdUsername(player,dm);
     }
 
     //------Load Campaign By Id -----
     //-------------------------------
     @GetMapping("campaign/{id}")
     public List<PlayerCampaigns> getCampaignById(@PathVariable Long id){
-        List<PlayerCampaigns> playerList = repo.findPlayerCampaignsByCampaignIdAndPlayerCharacterIsNotNull(id);
-        return playerList;
+        return repo.findPlayerCampaignsByCampaignIdAndPlayerCharacterIsNotNull(id);
     }
 
     //--- Add Character to Campaign ----
@@ -60,8 +58,7 @@ public class PlayerCampaignController {
     @Transactional
     public List<PlayerCampaigns> deleteCampaign(@PathVariable Long id){
         repo.deleteById(id);
-        List<PlayerCampaigns> pc = (List<PlayerCampaigns>) repo.findAll();
-        return pc;
+        return (List<PlayerCampaigns>) repo.findAll();
     }
 
     //--- Leave/Remove Campaign ---
@@ -72,8 +69,7 @@ public class PlayerCampaignController {
         repo.deletePlayerCampaignsByPlayerCharacterId(id);
         Optional<PlayerCharacter> playerCharacter = charRepo.findById(id);
         playerCharacter.get().setCampId(null);
-        List<PlayerCampaigns> pc = (List<PlayerCampaigns>) repo.findAll();
-        return pc;
+        return (List<PlayerCampaigns>) repo.findAll();
     }
 
 

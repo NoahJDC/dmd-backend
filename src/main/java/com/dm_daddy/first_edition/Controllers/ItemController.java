@@ -1,13 +1,16 @@
 package com.dm_daddy.first_edition.Controllers;
 
+import com.dm_daddy.first_edition.Model.Feats;
 import com.dm_daddy.first_edition.Model.Items;
 import com.dm_daddy.first_edition.Model.RefCode;
 import com.dm_daddy.first_edition.Repositories.ItemRepository;
 import com.dm_daddy.first_edition.Repositories.RefCodeRepository;
+import com.dm_daddy.first_edition.Service.ItemTestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +20,7 @@ import java.util.List;
 @RestController
 @RepositoryRestController
 @CrossOrigin
+@RequestMapping(value="/items")
 public class ItemController {
     @Autowired
     private ItemRepository repo;
@@ -24,80 +28,70 @@ public class ItemController {
     @Autowired
     private RefCodeRepository refRepo;
 
+    @Autowired
+    private ItemTestService itemTestService;
 
-    //----- Load All Items --------
-    //-----------------------------
-    @GetMapping("/items/all")
-    public Page<Items> getAllItems(@RequestParam int page, @RequestParam int size){
-        Page<Items> itemList = (Page<Items>) repo.getAllItems(PageRequest.of(page, size));
-        return itemList;
-    }
 
     //--- Load Item List -----
     //------------------------
-    @GetMapping("/items/list")
+    @GetMapping(value ="/list", produces=MediaType.APPLICATION_JSON_VALUE)
     public List<Items> getAllItemList(){
-        List<Items> itemList = (List<Items>) repo.findAll();
-        return itemList;
+        return (List<Items>) itemTestService.getAllItems();
     }
+
 
     //---- Load Item Type -------
     //---------------------------
-    @GetMapping("/items/type")
+    @GetMapping("/type")
     public List<RefCode>  getItemType(){
-        List<RefCode> itemTypes = (List<RefCode>) refRepo.findByParentId((long) 9);
-        return itemTypes;
+        return refRepo.findByParentId((long) 9);
     }
 
     //----- Load Rarity ---------
     //---------------------------
-    @GetMapping("/items/rarity")
+    @GetMapping("/rarity")
     public List<RefCode> getRarity(){
-        List<RefCode> rarity = refRepo.findByParentId((long) 1);
-        return rarity;
+        return refRepo.findByParentId((long) 1);
     }
 
     //---- Load Attunement -----
     //--------------------------
-    @GetMapping("/items/attunement")
+    @GetMapping("/attunement")
     public List<RefCode> getAttunment(){
-        List<RefCode> attunement = refRepo.findByParentId((long) 91);
-        return attunement;
+        return refRepo.findByParentId((long) 91);
+
     }
 
     //---- Load Armor Type ------
     //---------------------------
-    @GetMapping("/items/armorType")
+    @GetMapping("/armorType")
     public List<RefCode> getArmorType(){
-        List<RefCode> armorType = refRepo.findByParentId((long) 19);
-        return armorType;
+        return refRepo.findByParentId((long) 19);
     }
 
     //----- Load Weapon Type ---
     //--------------------------
-    @GetMapping("/items/weaponType")
+    @GetMapping("/weaponType")
     public List<RefCode> getWeaponType(){
-        List<RefCode> weaponType = refRepo.findByParentId((long) 34);
-        return weaponType;
+        return refRepo.findByParentId((long) 34);
     }
 
     //---- Create an Item -------
     //---------------------------
-    @RequestMapping(value="/items/create")
-    @PostMapping
+    @RequestMapping(value="/create",consumes=MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+//    @PostMapping
     public Items createItem(@RequestBody Items item){
-        Items createdItem = repo.save(item);
-        return createdItem;
+//        Items createdItem = repo.save(item);
+        return itemTestService.createItem(item);
     }
 
     //---- Delete an Item -----
     //-------------------------
-    @RequestMapping(value="/items/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value="/{id}", method = RequestMethod.DELETE)
     @Transactional
     public List<Items> deleteItem(@PathVariable Long id){
         repo.deleteById(id);
-        List<Items> itemList = (List<Items>) repo.findAll();
-        return itemList;
+        return (List<Items>) repo.findAll();
     }
 
 }

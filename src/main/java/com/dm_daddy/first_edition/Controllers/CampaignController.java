@@ -35,16 +35,14 @@ public class CampaignController {
     //-------------------------------
    @GetMapping("/campaign/all")
     public List<Campaign> getAllCampaigns(){
-        List<Campaign> campaignList = (List<Campaign>) repo.findAll();
-        return campaignList;
+        return (List<Campaign>) repo.findAll();
     }
 
     //---Load Campaign by Id -----
     //---------------------------
     @GetMapping("/campaign/single/{id}")
     public List<Campaign> getCampaignById(@PathVariable Long id){
-       List<Campaign> campaign = (List<Campaign>) repo.findCampaignById(id);
-       return campaign;
+        return repo.findCampaignById(id);
     }
 
     //--- Create Campaign ---

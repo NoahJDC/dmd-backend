@@ -40,8 +40,7 @@ public class PendingCampaignController {
     //---------------------------------------
     @GetMapping("/invite/{username}")
     public List<PendingCampaign> getPendingCampaignByPlayer(@PathVariable String username){
-        List<PendingCampaign> pendingList = repo.findPendingCampaignByPlayerContaining(username);
-        return pendingList;
+        return repo.findPendingCampaignByPlayerContaining(username);
     }
 
     //--- Decline Campaign Invite----
@@ -49,8 +48,7 @@ public class PendingCampaignController {
     @RequestMapping(value = "/invite/delete/{id}", method = RequestMethod.DELETE)
     public List<PendingCampaign> deleteInvite(@PathVariable Long id){
         repo.deleteById(id);
-        List<PendingCampaign> pendingList = (List<PendingCampaign>) repo.findAll();
-        return pendingList;
+        return (List<PendingCampaign>) repo.findAll();
     }
 
 

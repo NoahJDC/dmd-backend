@@ -21,8 +21,7 @@ public class EquipmentController {
     //--------------------------------
     @GetMapping("/equipments")
     public List<Equipment> getAllEquipments(){
-        List<Equipment> equipmentList = (List<Equipment>) repo.findAll();
-        return equipmentList;
+        return (List<Equipment>) repo.findAll();
     }
 
 }
